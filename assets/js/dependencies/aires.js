@@ -12,6 +12,34 @@ jQuery(document).ready(function($) {
             $("#modalBox").modal();
         })
 	});
+	$(document).on('click', "#submitTimesheet", function(){
+		var tsRowIds = '';
+		$(".tsRow").each(function( index ) {
+			tsRowIds = tsRowIds.concat($(this).data('tsid')) + ','; 
+		});
+		if(tsRowIds == '') {
+			alert('You do not have any time entry to submit');
+		}
+		tsRowIds = tsRowIds.replace(/,$/,"");
+		var submitTsUrl = 'http://localhost:1337/timesheet/submitTimesheet?rowid='+tsRowIds;
+
+		$.ajax({
+			type: "PUT",
+			url: submitTsUrl,
+            complete : function (response, statusText, xhr, $form) {
+                if(response.responseText == 'success'){
+                	alert("Success");
+                    return true;
+                }
+                else {
+                    alert("Error");
+                    return false;
+                }
+            }
+		});
+
+	});
+	
 
 	$("#modalBox").on('click', "#submitModal", function(){
 		if($("#modalBox #mdhandler").text() == 'addNewTimesheetRow') {

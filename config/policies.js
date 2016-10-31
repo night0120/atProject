@@ -26,7 +26,33 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+   '*': false,
+
+  'AuthController': {
+      'login': true,
+      'logout': true
+  },
+  
+  'HomeController': {
+      'homepage': true
+  },
+  
+  'TimesheetController': {
+      '*': 'isAuthenticated'
+  },
+
+  'CustomerController': {
+      '*': 'isAuthenticated'
+  },
+  
+  'StockController': {
+      '*': 'isAuthenticated'
+  },
+
+  'UserController': {
+      '*': 'isAuthenticated'
+  },
+
 
   /***************************************************************************
   *                                                                          *

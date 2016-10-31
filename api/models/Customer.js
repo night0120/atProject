@@ -23,13 +23,7 @@ module.exports = {
     stocks: {
       collection: 'stock',  //tells us what model to use
       via: 'owner'          //tells us what attribute of stock will connect us back to "customer"
-    },
-
-    //customer can own many stocks -> 1-to-many relationship
-    timesheet: {
-      collection: 'timesheet',  //tells us what model to use
-      via: 'owner'          //tells us what attribute of timesshet will connect us back to "customer"
-    }    
+    }
   }
 };
 

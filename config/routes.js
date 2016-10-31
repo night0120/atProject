@@ -32,17 +32,10 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
+ /* '/': {
     view: 'index'
-  },
-
-  //return raw view without including layout.ejs. Good for ajax returns, and modal
-  'GET /raw': { 
-      view: 'raw',
-      locals: {
-        layout: false
-      }
-    }
+  },*/
+  '/': 'HomeController.homepage',
 
   /***************************************************************************
   *                                                                          *
@@ -54,4 +47,29 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  //return raw view without including layout.ejs. Good for ajax returns, and modal
+  'GET /raw': { 
+      view: 'raw',
+      locals: {
+        layout: false
+      }
+  },
+
+  'GET /login': {
+    view: 'login',
+    locals: {
+      layout: false
+    }
+  },
+
+  'POST /login': 'AuthController.login',
+
+  '/logout': 'AuthController.logout',
+
+  'GET /signup': {
+    view: 'signup',
+    locals: {
+      layout: false
+    }
+  }
 };

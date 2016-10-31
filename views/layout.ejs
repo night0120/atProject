@@ -45,7 +45,6 @@
     <!--STYLES END-->
 </head>
 <body>
-
   <div class="mdl-layout mdl-js-layout">
     <header class="mdl-layout__header">
       <div class="mdl-layout-icon"></div>
@@ -59,10 +58,12 @@
           <li class="appDrawers">
             <i class="fa fa-th"></i>
           </li>       
-          <li class="userAvatar">
+          <% if(typeof req.user != 'undefined') { %>
+            <li class="userAvatar">
               <img src="https://pmcvariety.files.wordpress.com/2015/08/matt-damon-the-martian.jpg"/>
-              <div class="uaName">Mark Watney</div>       
-          </li>
+              <div class="uaName"><%- req.user.name %></div>       
+            </li>
+          <% } %>
           </ul>
       </div>
     </header>
@@ -111,8 +112,7 @@
         </div>
       </div>
     </div>
-
-  </div>   
+  </div>
 
   <!--
       Client-side Templates

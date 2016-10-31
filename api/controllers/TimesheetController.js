@@ -8,12 +8,11 @@
 module.exports = {
 	/* show views */
 	add_row_form:  function(req, res) {
-		Customer.findOne(req.param('owner'), function foundCustomer (err, user) {
-
+		User.findOne(req.param('user'), function foundUser (err, user) {
 			if(err) {				
 				return next(err);
 			}
-			if(!customer) {
+			if(!user) {
 				return next();
 			}
 
@@ -36,11 +35,40 @@ module.exports = {
 
 	/* actions manager */
 	addRow: function(req, res, next) {
-		Timesheet.create(req.params.all(), function addTimesheetRow(err, ts_row) {
+		var timesheetObj = {
+			title: req.param('title'),		
+			type: req.param('type'),
+			hours: req.param('hours'),
+			amount: req.param('amount'),
+			description: req.param('description'),
+			user: req.user.id
+		};
+
+		Timesheet.create(timesheetObj, function addTimesheetRow(err, ts_row) {
 			if(err) return next(err);
 
 			res.send('success');
 		});
+	},
+	submitTimesheet: function(req, res, next) {
+		var hasError = 0;
+		var rowIdArray = req.query.rowid.split(",").map(function (val) { 
+			Timesheet.update({id: val}, {ts_status: "submitted"}).exec( function(err, timesheet) {
+				if(err){
+					console.log(err);
+					hasError += 1;
+				}
+
+				console.log("done" + timesheet);
+			});
+		});
+
+		if(hasError > 0) {
+			return res.send("failed");
+		}
+		else {
+			return res.send("success");
+		}
 	}
 
 };
