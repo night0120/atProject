@@ -1,0 +1,6 @@
+/**
+ * RoutingController
+ */
+module.exports = {
+
+};

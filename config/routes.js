@@ -33,8 +33,16 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage'
-  }
+    view: 'index'
+  },
+
+  //return raw view without including layout.ejs. Good for ajax returns, and modal
+  'GET /raw': { 
+      view: 'raw',
+      locals: {
+        layout: false
+      }
+    }
 
   /***************************************************************************
   *                                                                          *
