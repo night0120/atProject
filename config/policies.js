@@ -40,6 +40,9 @@ module.exports.policies = {
   'TimesheetController': {
       '*': 'isAuthenticated'
   },
+    'AdminController': {
+      '*': 'isAuthenticated'
+  },
 
   'CustomerController': {
       '*': 'isAuthenticated'

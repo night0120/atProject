@@ -39,7 +39,7 @@
 
 
     <!--STYLES-->
-    <link rel="stylesheet" href="/styles/aires.css">
+    <link rel="stylesheet" href="/styles/ares.css">
     <link rel="stylesheet" href="/styles/bootstrap.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
@@ -49,9 +49,12 @@
     <header class="mdl-layout__header">
       <div class="mdl-layout-icon"></div>
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout__title">Aires III</span>
+        <span class="mdl-layout__title">
+          <img class="siteLogo" src="https://ih1.redbubble.net/image.117475822.0277/sticker,375x360.u3.png"/>
+          Ares III
+        </span>
         <div class="mdl-layout-spacer"></div>
-        <ul class="menuActions h-menu">
+        <ul class="menuActions h-menu">    
           <li class="searchBar">
             <i class="fa fa-search"></i>
           </li> 
@@ -60,15 +63,32 @@
           </li>       
           <% if(typeof req.user != 'undefined') { %>
             <li class="userAvatar">
-              <img src="https://pmcvariety.files.wordpress.com/2015/08/matt-damon-the-martian.jpg"/>
-              <div class="uaName"><%- req.user.name %></div>       
+              <% if(req.user.name == "Mark Watney") { %>
+                <img src="http://vignette1.wikia.nocookie.net/the-martian/images/1/18/Mark_Watney.jpg/revision/latest?cb=20150608134727"/>                  
+              <% } %>
+              <% if(req.user.name == "Ares Admin") { %>
+                <img src="http://ih1.redbubble.net/image.98050092.7114/fc,550x550,black.u5.jpg"/>
+              <% } %>
+              <div id="userMenuOptions" class="uaName">
+                <%- req.user.name %>                 
+              </div>
+
+              <ul id="userMenuItems" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="userMenuOptions">
+                <li class="mdl-menu__item"><i class="fa fa-bell"></i> Alerts</li>
+                <li class="mdl-menu__item"><i class="fa fa-envelope-o"></i> Messages</li>
+                <li class="mdl-menu__item"><i class="fa fa-user"></i> My Profile</li>
+                <li class="mdl-menu__item"><i class="fa fa-cog"></i> Settings</li>  
+                <li class="listDivider"></li>  
+                <li id="menuLogOut" class="mdl-menu__item"><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+              </ul>
+
             </li>
           <% } %>
           </ul>
       </div>
     </header>
     <div class="mdl-layout__drawer">
-      <span class="mdl-layout__title">Aires III Menu</span>
+      <span class="mdl-layout__title">Ares III Menu</span>
       <nav class="mdl-navigation">
         <a class="mdl-navigation__link" href="#">Activities</a>
         <a class="mdl-navigation__link" href="#">Tasks</a>
@@ -112,6 +132,12 @@
         </div>
       </div>
     </div>
+
+    <div id="notifyMessage" class="mdl-js-snackbar mdl-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+    
   </div>
 
   <!--
@@ -165,7 +191,7 @@
 
   <!--SCRIPTS-->
   <script src="/js/dependencies/sails.io.js"></script>
-  <script src="/js/dependencies/aires.js"></script>
+  <script src="/js/dependencies/ares.js"></script>
   <script src="/js/third-party/bootstrap.min.js"></script>
   <script src="/js/third-party/jquery.form.js"></script>
   <!--SCRIPTS END-->

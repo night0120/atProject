@@ -1,5 +1,5 @@
 /**
- * TimeentreeController
+ * TimesheetController
  *
  * @description :: Server-side logic for managing timeentrees
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
@@ -7,7 +7,7 @@
 
 module.exports = {
 	/* show views */
-	add_row_form:  function(req, res) {
+	add_row_form:  function(req, res, next) {
 		User.findOne(req.param('user'), function foundUser (err, user) {
 			if(err) {				
 				return next(err);
@@ -17,8 +17,21 @@ module.exports = {
 			}
 
 			res.view({
-				user: user
+				user: user,
+				layout:false
 			})
+		});
+	},
+	edit_row_form: function(req, res, next) {
+		Timesheet.findOne(req.query.rowid).populateAll().exec( function(err, timesheetRow) {
+			if(err) next(err);
+			if(!timesheetRow) return next();
+
+			res.view({
+				tsRow: timesheetRow,
+				layout:false
+			});
+
 		});
 	},
 	load_user_timesheet_table:  function(req, res) {
@@ -50,6 +63,32 @@ module.exports = {
 			res.send('success');
 		});
 	},
+	updateRow: function(req, res, next) {
+		var timesheetObj = {
+			title: req.param('title'),		
+			type: req.param('type'),
+			hours: req.param('hours'),
+			amount: req.param('amount'),
+			description: req.param('description'),
+			user: req.user.id
+		};
+		Timesheet.update(req.param('rowid'), timesheetObj, function timeSheetUpdated(err) {
+			if(err){
+				res.send('failed: '+ err);
+			}
+
+			res.send('success');
+		});
+	},
+	deleteRow: function(req, res, next) {
+		Timesheet.destroy(req.query.rowid).exec( function(err) {
+			if(err){
+				res.send('failed: '+ err);
+			}
+
+			res.send('success');
+		});
+	},	
 	submitTimesheet: function(req, res, next) {
 		var hasError = 0;
 		var rowIdArray = req.query.rowid.split(",").map(function (val) { 
